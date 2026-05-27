@@ -1,449 +1,721 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jooeun Lim — Dance Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jooeun Lim — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --bg: #0a0a0f;
-    --bg2: #111118;
-    --bg3: #16161f;
-    --accent: #c9a96e;
-    --accent2: #e8d5b0;
-    --text: #f0ece4;
-    --muted: #8a8590;
-    --border: rgba(201,169,110,0.18);
-    --serif: 'Cormorant Garamond', Georgia, serif;
-    --sans: 'DM Sans', sans-serif;
-  }
+    :root {
+      --bg: #080a0f;
+      --surface: #0e1118;
+      --card: #131720;
+      --accent: #c8a96e;
+      --accent2: #e8c99a;
+      --text: #e8e4dc;
+      --muted: #7a7870;
+      --border: rgba(200,169,110,0.18);
+      --glow: rgba(200,169,110,0.08);
+    }
 
-  html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-weight: 300;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: none;
+    }
 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.4rem 4rem;
-    background: linear-gradient(to bottom, rgba(10,10,15,0.98) 0%, transparent 100%);
-    backdrop-filter: blur(4px);
-  }
-  .nav-logo {
-    font-family: var(--serif); font-size: 1.2rem; font-weight: 300;
-    color: var(--accent); letter-spacing: 0.08em;
-  }
-  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
-  .nav-links a {
-    color: var(--muted); text-decoration: none; font-size: 0.78rem;
-    letter-spacing: 0.14em; text-transform: uppercase; font-weight: 400;
-    transition: color 0.3s;
-  }
-  .nav-links a:hover { color: var(--accent); }
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease;
+      mix-blend-mode: screen;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.4s cubic-bezier(.2,.8,.2,1), opacity 0.3s;
+      opacity: 0.5;
+    }
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    text-align: center;
-    padding: 6rem 2rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 70% 60% at 50% 40%, rgba(201,169,110,0.06) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 40% at 20% 70%, rgba(120,80,180,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 50% at 80% 20%, rgba(201,169,110,0.04) 0%, transparent 60%);
-  }
-  .hero-eyebrow {
-    font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 1.8rem; font-weight: 400;
-    animation: fadeUp 0.9s ease both;
-  }
-  .hero-name {
-    font-family: var(--serif); font-size: clamp(4rem, 10vw, 9rem);
-    font-weight: 300; line-height: 0.9; letter-spacing: -0.01em;
-    margin-bottom: 1rem;
-    animation: fadeUp 1s 0.15s ease both;
-  }
-  .hero-name em {
-    font-style: italic; color: var(--accent);
-    display: block;
-  }
-  .hero-subtitle {
-    font-family: var(--serif); font-size: clamp(1rem, 2.5vw, 1.4rem);
-    font-weight: 300; font-style: italic;
-    color: var(--muted); margin-bottom: 3.5rem;
-    animation: fadeUp 1s 0.3s ease both;
-  }
-  .hero-cta {
-    display: inline-block;
-    padding: 0.85rem 2.5rem;
-    border: 1px solid var(--accent);
-    color: var(--accent); text-decoration: none;
-    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 400;
-    transition: background 0.35s, color 0.35s;
-    animation: fadeUp 1s 0.45s ease both;
-  }
-  .hero-cta:hover { background: var(--accent); color: var(--bg); }
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.6;
+    }
 
-  /* decorative lines */
-  .hero-lines {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 700px; height: 700px; pointer-events: none;
-    animation: rotateSlow 40s linear infinite;
-  }
-  .hero-lines circle {
-    fill: none; stroke: rgba(201,169,110,0.08); stroke-width: 0.5;
-  }
-  .hero-lines line {
-    stroke: rgba(201,169,110,0.05); stroke-width: 0.5;
-  }
-  @keyframes rotateSlow { to { transform: translate(-50%,-50%) rotate(360deg); } }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(28px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      background: linear-gradient(to bottom, rgba(8,10,15,0.95), transparent);
+      backdrop-filter: blur(2px);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent2); }
 
-  /* ── SECTIONS ── */
-  section { padding: 7rem 4rem; max-width: 1100px; margin: 0 auto; }
+    /* Hero */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 70% 40%, rgba(200,169,110,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,169,110,0.04) 0%, transparent 60%),
+        linear-gradient(135deg, #080a0f 0%, #0c1020 100%);
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,169,110,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,169,110,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 60% 40%, black 20%, transparent 80%);
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+    .hero-tag {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      margin-bottom: 32px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(52px, 9vw, 110px);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .hero-name span {
+      display: block;
+      background: linear-gradient(135deg, var(--text) 0%, var(--accent2) 50%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      margin-top: 24px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 3vw, 26px);
+      font-style: italic;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .hero-desc {
+      margin-top: 32px;
+      max-width: 480px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .hero-cta {
+      margin-top: 48px;
+      display: flex;
+      gap: 16px;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .btn {
+      display: inline-block;
+      padding: 13px 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #080a0f;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--accent);
+    }
+    .btn-outline:hover { border-color: var(--accent); background: var(--glow); transform: translateY(-2px); }
 
-  .section-label {
-    font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 1rem; font-weight: 400;
-    display: flex; align-items: center; gap: 1rem;
-  }
-  .section-label::after {
-    content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--border);
-  }
-  .section-title {
-    font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3.8rem);
-    font-weight: 300; line-height: 1.1; margin-bottom: 3rem;
-  }
-  .section-title em { font-style: italic; color: var(--accent); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 48px; right: 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: fadeUp 1s 0.8s ease both;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollAnim 1.8s ease-in-out infinite;
+    }
 
-  /* ── ABOUT ── */
-  .about-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
-  }
-  .about-text { color: rgba(240,236,228,0.8); font-size: 1.05rem; line-height: 1.85; }
-  .about-text p + p { margin-top: 1.2rem; }
-  .about-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 2rem;
-    position: relative;
-  }
-  .about-card::before {
-    content: '';
-    position: absolute; top: -1px; left: 2rem; width: 3rem; height: 2px;
-    background: var(--accent);
-  }
-  .about-card-label {
-    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 0.5rem;
-  }
-  .about-card-value {
-    font-family: var(--serif); font-size: 1.2rem; font-weight: 300;
-    color: var(--accent2); margin-bottom: 1.4rem;
-  }
-  .about-card-value:last-child { margin-bottom: 0; }
+    /* Sections shared */
+    section { padding: 120px 48px; position: relative; }
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 64px;
+    }
+    .divider {
+      width: 40px; height: 1px;
+      background: var(--accent);
+      margin: 16px 0 48px;
+    }
 
-  /* ── PROJECTS ── */
-  #projects { background: var(--bg2); max-width: 100%; padding: 7rem 4rem; }
-  #projects > .inner { max-width: 1100px; margin: 0 auto; }
-  .project-card {
-    display: grid; grid-template-columns: 80px 1fr;
-    gap: 0 2.5rem; align-items: start;
-    padding: 2.5rem 0; border-bottom: 1px solid var(--border);
-  }
-  .project-card:first-of-type { border-top: 1px solid var(--border); }
-  .project-num {
-    font-family: var(--serif); font-size: 3.5rem; font-weight: 300;
-    color: rgba(201,169,110,0.2); line-height: 1; padding-top: 0.2rem;
-  }
-  .project-meta { display: flex; flex-direction: column; gap: 0.5rem; }
-  .project-tag {
-    font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--accent); font-weight: 400;
-  }
-  .project-name {
-    font-family: var(--serif); font-size: 1.9rem; font-weight: 300;
-    color: var(--text); line-height: 1.2;
-  }
-  .project-desc {
-    color: var(--muted); font-size: 0.95rem; line-height: 1.75;
-    margin-top: 0.5rem; max-width: 600px;
-  }
-  .project-tags {
-    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;
-  }
-  .tag {
-    padding: 0.3rem 0.8rem;
-    border: 1px solid var(--border);
-    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--muted); font-weight: 400;
-  }
+    /* About */
+    #about {
+      background: var(--surface);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.5vw, 22px);
+      line-height: 1.8;
+      color: var(--text);
+      font-weight: 300;
+    }
+    .about-text em { color: var(--accent2); font-style: italic; }
+    .about-details { display: flex; flex-direction: column; gap: 24px; padding-top: 8px; }
+    .detail-item {
+      border-left: 1px solid var(--border);
+      padding-left: 20px;
+    }
+    .detail-label {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .detail-value { color: var(--accent2); font-size: 14px; }
 
-  /* ── SKILLS ── */
-  .skills-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-  }
-  .skill-block {
-    background: var(--bg2); border: 1px solid var(--border);
-    padding: 1.8rem 1.6rem;
-    position: relative; overflow: hidden;
-    transition: border-color 0.3s;
-  }
-  .skill-block:hover { border-color: rgba(201,169,110,0.45); }
-  .skill-block::after {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), transparent);
-    transform: scaleX(0); transform-origin: left;
-    transition: transform 0.4s ease;
-  }
-  .skill-block:hover::after { transform: scaleX(1); }
-  .skill-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
-  .skill-name {
-    font-family: var(--serif); font-size: 1.1rem; font-weight: 300;
-    color: var(--accent2); margin-bottom: 0.4rem;
-  }
-  .skill-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    /* Projects */
+    #projects { background: var(--bg); }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .project-card {
+      background: var(--card);
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s ease;
+      border: 1px solid transparent;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border);
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .project-card:hover::before { opacity: 1; }
+    .project-num {
+      font-size: 60px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      color: rgba(200,169,110,0.08);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    .project-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .project-desc { color: var(--muted); font-size: 13px; line-height: 1.8; margin-bottom: 28px; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border: 1px solid var(--border);
+      color: var(--accent);
+    }
 
-  /* ── CONTACT ── */
-  .contact-inner {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
-  }
-  .contact-big {
-    font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 300; line-height: 1.05;
-  }
-  .contact-big em { font-style: italic; color: var(--accent); display: block; }
-  .contact-links { display: flex; flex-direction: column; gap: 1.2rem; }
-  .contact-item {
-    display: flex; align-items: center; gap: 1rem;
-    padding: 1.2rem 1.5rem;
-    border: 1px solid var(--border);
-    text-decoration: none; color: var(--text);
-    transition: border-color 0.3s, background 0.3s;
-  }
-  .contact-item:hover {
-    border-color: var(--accent);
-    background: rgba(201,169,110,0.05);
-  }
-  .contact-item-icon {
-    font-size: 1.1rem; color: var(--accent);
-  }
-  .contact-item-label {
-    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--muted); display: block; margin-bottom: 0.1rem;
-  }
-  .contact-item-value { font-size: 0.95rem; color: var(--text); }
+    /* Spacer card (aesthetic) */
+    .project-card.accent-card {
+      background: linear-gradient(135deg, rgba(200,169,110,0.12), rgba(200,169,110,0.03));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .accent-card-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--accent2);
+      opacity: 0.7;
+    }
 
-  /* ── FOOTER ── */
-  footer {
-    text-align: center; padding: 3rem 2rem;
-    border-top: 1px solid var(--border);
-    color: var(--muted); font-size: 0.8rem; letter-spacing: 0.08em;
-  }
-  footer span { color: var(--accent); }
+    /* Skills */
+    #skills { background: var(--surface); }
+    .skills-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .skill-group { }
+    .skill-group-title {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .skill-bar-wrap { flex: 1; height: 2px; background: rgba(255,255,255,0.06); }
+    .skill-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform-origin: left;
+      animation: barGrow 1.2s cubic-bezier(.4,0,.2,1) both;
+    }
+    .skill-name { font-size: 12px; color: var(--text); min-width: 110px; }
+    .skill-pct { font-size: 10px; color: var(--muted); min-width: 32px; text-align: right; }
 
-  /* ── DIVIDER ── */
-  .divider {
-    width: 60px; height: 1px; background: var(--accent);
-    margin: 0 auto 4rem;
-  }
+    /* Contact */
+    #contact {
+      background: var(--bg);
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .contact-inner {
+      max-width: 700px;
+    }
+    .contact-big {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 32px;
+    }
+    .contact-big span { color: var(--accent); }
+    .contact-links { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 13px;
+      transition: color 0.3s;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-link:hover { color: var(--accent2); }
+    .contact-link-label {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      min-width: 80px;
+    }
+    .contact-arrow { margin-left: auto; transition: transform 0.3s; }
+    .contact-link:hover .contact-arrow { transform: translateX(6px); }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 820px) {
-    nav { padding: 1.2rem 1.8rem; }
-    .nav-links { display: none; }
-    section { padding: 5rem 1.8rem; }
-    #projects { padding: 5rem 1.8rem; }
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .skills-grid { grid-template-columns: 1fr 1fr; }
-    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
-    .hero { padding: 5rem 1.5rem 3rem; }
-    .project-card { grid-template-columns: 50px 1fr; gap: 0 1.2rem; }
-  }
-  @media (max-width: 520px) {
-    .skills-grid { grid-template-columns: 1fr; }
-  }
-</style>
+    /* Footer */
+    footer {
+      padding: 32px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollAnim {
+      0%, 100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      40%       { opacity: 1; transform: scaleY(1); transform-origin: top; }
+      60%       { opacity: 1; transform: scaleY(1); transform-origin: bottom; }
+      90%       { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+    }
+    @keyframes barGrow {
+      from { width: 0; }
+      to   { width: var(--w); }
+    }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { gap: 20px; }
+      section { padding: 80px 24px; }
+      #hero { padding: 100px 24px 60px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .skills-container { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .hero-scroll { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">Jooeun Lim</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- HERO -->
-<header class="hero">
-  <svg class="hero-lines" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="350" cy="350" r="280"/>
-    <circle cx="350" cy="350" r="220"/>
-    <circle cx="350" cy="350" r="160"/>
-    <circle cx="350" cy="350" r="330"/>
-    <line x1="70" y1="350" x2="630" y2="350"/>
-    <line x1="350" y1="70" x2="350" y2="630"/>
-    <line x1="152" y1="152" x2="548" y2="548"/>
-    <line x1="548" y1="152" x2="152" y2="548"/>
-  </svg>
-  <p class="hero-eyebrow">Dance Artist · Researcher · Performer</p>
-  <h1 class="hero-name">Jooeun<em>Lim</em></h1>
-  <p class="hero-subtitle">B.A. Dance — Sungkyunkwan University, Seoul</p>
-  <a href="#about" class="hero-cta">Explore Portfolio</a>
-</header>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#hero">JL</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-<!-- ABOUT -->
-<section id="about">
-  <p class="section-label">Introduction</p>
-  <h2 class="section-title">About <em>Me</em></h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>Hello, I'm Jooeun Lim — a dance student at Sungkyunkwan University (SKKU) in Seoul, South Korea, with a deep passion for movement as both art and inquiry.</p>
-      <p>My practice bridges classical and contemporary forms, exploring how the body communicates what words cannot. I am drawn to the intersection of choreography, culture, and identity — investigating how dance serves as a living archive of human experience across nations and generations.</p>
-      <p>Beyond performance, I pursue research that situates dance within broader sociocultural contexts, asking questions about globalisation, artistic exchange, and the transformative power of movement in public life.</p>
-      <p>I am committed to growing as a versatile artist — in the studio, on stage, and in the academic study of dance — and to contributing to the vibrant landscape of Korean and international contemporary dance.</p>
-    </div>
-    <div>
-      <div class="about-card">
-        <div class="about-card-label">University</div>
-        <div class="about-card-value">Sungkyunkwan University (SKKU)</div>
-        <div class="about-card-label">Major</div>
-        <div class="about-card-value">Dance</div>
-        <div class="about-card-label">Location</div>
-        <div class="about-card-value">Seoul, South Korea</div>
-        <div class="about-card-label">Focus</div>
-        <div class="about-card-value">Performance · Research · Choreography</div>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Portfolio 2025</div>
+      <h1 class="hero-name">
+        <span>Jooeun</span>
+        <span>Lim</span>
+      </h1>
+      <p class="hero-sub">Dancer · Researcher · Cultural Explorer</p>
+      <p class="hero-desc">
+        Dance major at Sungkyunkwan University — studying the body in motion
+        and the city as a stage. Passionate about how culture moves through
+        space, from performance halls to pop-up streets.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#projects">View Projects</a>
+        <a class="btn btn-outline" href="#contact">Get in Touch</a>
       </div>
     </div>
-  </div>
-</section>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
 
-<!-- PROJECTS -->
-<div id="projects">
-  <div class="inner">
-    <p class="section-label">Work</p>
-    <h2 class="section-title">Selected <em>Projects</em></h2>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">01 — Who I Am</div>
+    <h2 class="section-title">About Me</h2>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        Hello! I'm <em>Jooeun Lim</em>, a 4th-year Dance major at
+        Sungkyunkwan University. I chose my research theme because of my deep
+        love for pop-up events — those fleeting, immersive experiences that
+        transform a neighborhood into something alive.<br><br>
+        I'm especially drawn to <em>Seongsu-dong</em> and <em>Hannam-dong</em>,
+        two of Seoul's most vibrant cultural districts, where I visit pop-ups
+        regularly and observe how generation Z and millennials consume space,
+        art, and brand experiences in new ways.
+      </div>
+      <div class="about-details">
+        <div class="detail-item">
+          <div class="detail-label">University</div>
+          <div class="detail-value">Sungkyunkwan University (SKKU)</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Major</div>
+          <div class="detail-value">Dance</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Year</div>
+          <div class="detail-value">4th Year (Senior)</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Research Interest</div>
+          <div class="detail-value">Pop-up Culture · Urban Space · MZ Generation</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Favorite Districts</div>
+          <div class="detail-value">Seongsu-dong · Hannam-dong</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <article class="project-card">
-      <div class="project-num">01</div>
-      <div class="project-meta">
-        <span class="project-tag">Research · Global Dance Studies</span>
-        <h3 class="project-name">Analysis of Overseas Tour Countries</h3>
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">02 — Work</div>
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-num">01</div>
+        <div class="project-title">MZ Generation Pop-up Store &amp; Cultural Space Consumption Trend Map</div>
         <p class="project-desc">
-          A comprehensive study examining the international touring patterns of Korean dance companies and individual artists. This project maps the countries most frequently visited, investigates the cultural and economic factors shaping these itineraries, and reflects on how overseas tours influence artistic development, cross-cultural exchange, and the global dissemination of Korean contemporary dance.
+          A research and visualization project mapping how MZ generation
+          consumers engage with pop-up stores and cultural spaces across
+          Seoul. The project examines spatial behavior, brand affinity,
+          and the experiential economy through the lens of contemporary
+          dance and cultural studies.
         </p>
         <div class="project-tags">
-          <span class="tag">Cultural Analysis</span>
-          <span class="tag">Korean Dance</span>
-          <span class="tag">Global Touring</span>
-          <span class="tag">Arts Research</span>
+          <span class="tag">Cultural Research</span>
+          <span class="tag">Data Mapping</span>
+          <span class="tag">MZ Generation</span>
+          <span class="tag">Pop-up Culture</span>
+          <span class="tag">Seoul</span>
         </div>
       </div>
-    </article>
-
-  </div>
-</div>
-
-<!-- SKILLS -->
-<section id="skills">
-  <p class="section-label">Expertise</p>
-  <h2 class="section-title">Areas of <em>Practice</em></h2>
-  <div class="skills-grid">
-    <div class="skill-block">
-      <div class="skill-icon">🩰</div>
-      <div class="skill-name">Classical Technique</div>
-      <div class="skill-desc">Training in ballet and traditional Korean dance forms, building a rigorous technical foundation for expressive performance.</div>
-    </div>
-    <div class="skill-block">
-      <div class="skill-icon">🌀</div>
-      <div class="skill-name">Contemporary Dance</div>
-      <div class="skill-desc">Exploration of modern and postmodern movement vocabularies — improvisation, release technique, and somatic practices.</div>
-    </div>
-    <div class="skill-block">
-      <div class="skill-icon">🎭</div>
-      <div class="skill-name">Choreography</div>
-      <div class="skill-desc">Creating original works that weave personal narrative and cultural inquiry into spatially and temporally driven composition.</div>
-    </div>
-    <div class="skill-block">
-      <div class="skill-icon">🔬</div>
-      <div class="skill-name">Dance Research</div>
-      <div class="skill-desc">Academic investigation of dance history, sociology, and cross-cultural performance practices with a focus on global Korean dance.</div>
-    </div>
-    <div class="skill-block">
-      <div class="skill-icon">🌏</div>
-      <div class="skill-name">Cultural Studies</div>
-      <div class="skill-desc">Analytical study of how dance travels across borders, and how cultural exchange shapes artistic identity and institutional practice.</div>
-    </div>
-    <div class="skill-block">
-      <div class="skill-icon">🎬</div>
-      <div class="skill-name">Stage Performance</div>
-      <div class="skill-desc">Live performance experience across studio showings, university productions, and public-facing dance events in Seoul.</div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-inner">
-    <div>
-      <p class="section-label">Get in Touch</p>
-      <h2 class="contact-big">Let's <em>Connect</em></h2>
-    </div>
-    <div class="contact-links">
-      <a class="contact-item" href="mailto:jooeun@example.com">
-        <span class="contact-item-icon">✉</span>
-        <div>
-          <span class="contact-item-label">Email</span>
-          <span class="contact-item-value">jooeun@example.com</span>
+      <div class="project-card accent-card reveal">
+        <div class="accent-card-quote">
+          "The city is a choreography.<br>Every pop-up, a new movement."
         </div>
-      </a>
-      <a class="contact-item" href="#">
-        <span class="contact-item-icon">🎓</span>
-        <div>
-          <span class="contact-item-label">University</span>
-          <span class="contact-item-value">SKKU Dance Department</span>
-        </div>
-      </a>
-      <a class="contact-item" href="#">
-        <span class="contact-item-icon">📍</span>
-        <div>
-          <span class="contact-item-label">Location</span>
-          <span class="contact-item-value">Seoul, South Korea</span>
-        </div>
-      </a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-  <p>© 2026 <span>Jooeun Lim</span> · Dance Artist · Sungkyunkwan University</p>
-</footer>
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">03 — Expertise</div>
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-container reveal">
+      <div class="skill-group">
+        <div class="skill-group-title">Performance</div>
+        <div class="skill-item">
+          <span class="skill-name">Contemporary Dance</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="--w:92%"></div></div>
+          <span class="skill-pct">92%</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Choreography</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="--w:85%"></div></div>
+          <span class="skill-pct">85%</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Stage Direction</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="--w:78%"></div></div>
+          <span class="skill-pct">78%</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Research</div>
+        <div class="skill-item">
+          <span class="skill-name">Cultural Analysis</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="--w:88%"></div></div>
+          <span class="skill-pct">88%</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Field Research</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="--w:90%"></div></div>
+          <span class="skill-pct">90%</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Data Visualization</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="--w:72%"></div></div>
+          <span class="skill-pct">72%</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Creative</div>
+        <div class="skill-item">
+          <span class="skill-name">Space Curation</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="--w:82%"></div></div>
+          <span class="skill-pct">82%</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Visual Storytelling</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="--w:80%"></div></div>
+          <span class="skill-pct">80%</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Presentation</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="--w:87%"></div></div>
+          <span class="skill-pct">87%</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-label">04 — Let's Connect</div>
+      <div class="contact-big reveal">
+        Let's<br><span>work</span><br>together.
+      </div>
+      <p class="reveal" style="color:var(--muted);max-width:420px;line-height:1.9;">
+        Whether it's a collaboration, a research partnership, or just a coffee
+        chat about Seoul's pop-up scene — I'd love to hear from you.
+      </p>
+      <div class="contact-links reveal">
+        <a class="contact-link" href="mailto:jooeun@skku.edu">
+          <span class="contact-link-label">Email</span>
+          jooeun@skku.edu
+          <span class="contact-arrow">→</span>
+        </a>
+        <a class="contact-link" href="https://instagram.com/" target="_blank">
+          <span class="contact-link-label">Instagram</span>
+          @jooeun_lim
+          <span class="contact-arrow">→</span>
+        </a>
+        <a class="contact-link" href="https://github.com/" target="_blank">
+          <span class="contact-link-label">GitHub</span>
+          github.com/jooeunlim
+          <span class="contact-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 Jooeun Lim. All rights reserved.</span>
+    <span style="color:var(--accent);letter-spacing:0.08em;">SKKU Dance ✦ Seoul</span>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function animCursor() {
+      cursor.style.left = mx - 5 + 'px';
+      cursor.style.top  = my - 5 + 'px';
+      rx += (mx - rx) * 0.14;
+      ry += (my - ry) * 0.14;
+      ring.style.left = rx - 18 + 'px';
+      ring.style.top  = ry - 18 + 'px';
+      requestAnimationFrame(animCursor);
+    })();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2.5)'; ring.style.opacity = '0'; });
+      el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)';   ring.style.opacity = '0.5'; });
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Skill bars animate on visible
+    const barObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.skill-bar').forEach(bar => {
+            bar.style.width = bar.style.getPropertyValue('--w') || getComputedStyle(bar).getPropertyValue('--w');
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.skills-container').forEach(el => barObserver.observe(el));
+  </script>
 </body>
 </html>
