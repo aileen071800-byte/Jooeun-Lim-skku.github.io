@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jooeun Lim — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --cream:#faf7f2;--warm:#f5efe6;--card:#ffffff;--accent:#b8966e;--accent2:#d4b896;
+      --gold:#c9a96e;--dark:#1a1510;--mid:#5c4a3a;--muted:#9c8878;--border:rgba(180,150,110,0.2);
+      --shadow:rgba(90,60,30,0.08);
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--cream);color:var(--dark);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;overflow-x:hidden;cursor:none}
+
+    /* cursor */
+    .cur{position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+    .cur-ring{position:fixed;width:32px;height:32px;border:1px solid var(--accent);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .4s cubic-bezier(.2,.8,.2,1);opacity:.5}
+    body:hover .cur{opacity:1}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:900;padding:22px 56px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,247,242,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--accent);text-decoration:none;letter-spacing:.02em}
+    .nav-links{display:flex;gap:36px;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--muted);font-size:11px;letter-spacing:.14em;text-transform:uppercase;transition:color .3s;font-weight:500}
+    .nav-links a:hover{color:var(--accent)}
+
+    /* HERO */
+    #hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:100px 56px 60px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--cream) 60%,var(--warm) 100%)}
+    .hero-decor{position:absolute;top:0;right:0;width:45%;height:100%;background:linear-gradient(135deg,var(--warm),#ede4d8);clip-path:polygon(12% 0,100% 0,100% 100%,0% 100%);z-index:0}
+    .hero-decor::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23b8966e' stroke-width='0.3' opacity='0.3'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3Ccircle cx='30' cy='30' r='10'/%3E%3C/g%3E%3C/svg%3E") repeat}
+    .hero-left{position:relative;z-index:2}
+    .hero-tag{display:inline-block;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);border:1px solid var(--border);padding:7px 16px;margin-bottom:32px;background:white;animation:fadeUp .8s ease both}
+    h1{font-family:'Playfair Display',serif;font-size:clamp(54px,7vw,96px);font-weight:700;line-height:.92;letter-spacing:-.02em;margin-bottom:28px;animation:fadeUp .8s .1s ease both}
+    h1 em{display:block;font-style:italic;font-weight:400;color:var(--accent);font-size:.75em}
+    .hero-role{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,2.5vw,24px);color:var(--muted);margin-bottom:32px;letter-spacing:.02em;animation:fadeUp .8s .2s ease both}
+    .hero-desc{max-width:400px;color:var(--mid);font-size:14px;line-height:1.9;margin-bottom:44px;animation:fadeUp .8s .3s ease both}
+    .hero-cta{display:flex;gap:14px;animation:fadeUp .8s .4s ease both}
+    .btn{display:inline-block;padding:13px 30px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;font-weight:500;transition:all .3s;cursor:none}
+    .btn-fill{background:var(--accent);color:white}
+    .btn-fill:hover{background:var(--dark);transform:translateY(-2px)}
+    .btn-out{border:1px solid var(--border);color:var(--accent);background:white}
+    .btn-out:hover{border-color:var(--accent);background:var(--warm);transform:translateY(-2px)}
+    .hero-right{position:relative;z-index:2;display:flex;flex-direction:column;gap:16px;padding-left:40px;animation:fadeUp .9s .3s ease both}
+    .hero-card{background:white;border:1px solid var(--border);padding:24px 28px;box-shadow:0 4px 24px var(--shadow);transition:transform .3s}
+    .hero-card:hover{transform:translateY(-4px)}
+    .hero-card-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+    .hero-card-val{font-family:'Playfair Display',serif;font-size:18px;color:var(--dark)}
+    .hero-card-sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .hero-scroll{position:absolute;bottom:40px;left:56px;display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);animation:fadeUp 1s .8s ease both;z-index:2}
+    .scroll-line{width:48px;height:1px;background:var(--accent);position:relative;overflow:hidden}
+    .scroll-line::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--dark);animation:lineSlide 1.8s ease-in-out infinite}
+    @keyframes lineSlide{0%{left:-100%}50%{left:0}100%{left:100%}}
+
+    /* ABOUT */
+    #about{padding:120px 56px;background:white;position:relative}
+    #about::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+    .about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
+    .about-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:500}
+    .about-heading{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-.02em;line-height:1.05;margin-bottom:32px;color:var(--dark)}
+    .about-text{font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.85;color:var(--mid);font-weight:300}
+    .about-text em{color:var(--accent);font-style:italic}
+    .about-details{display:flex;flex-direction:column;gap:0}
+    .detail-item{padding:20px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center}
+    .detail-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500}
+    .detail-val{color:var(--dark);font-size:14px;font-weight:400}
+    .detail-val strong{color:var(--accent);font-weight:500}
+    .about-photo-box{width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,var(--warm),var(--accent2));position:relative;overflow:hidden;box-shadow:24px 24px 0 var(--border)}
+    .about-photo-box::after{content:'JL';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:96px;font-weight:700;color:rgba(255,255,255,.4);font-style:italic}
+
+    /* PROJECTS */
+    #projects{padding:120px 56px;background:var(--cream)}
+    .section-header{margin-bottom:64px}
+    .section-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:500}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-.02em;line-height:1.05;color:var(--dark)}
+    .projects-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:24px}
+    .project-card{background:white;border:1px solid var(--border);padding:44px;box-shadow:0 2px 16px var(--shadow);transition:all .4s;position:relative;overflow:hidden}
+    .project-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--accent);transition:height .4s}
+    .project-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px var(--shadow)}
+    .project-card:hover::before{height:100%}
+    .project-num{font-family:'Playfair Display',serif;font-size:64px;font-weight:700;color:rgba(180,150,110,.1);line-height:1;margin-bottom:20px;font-style:italic}
+    .project-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--dark);margin-bottom:14px;line-height:1.35}
+    .project-desc{font-size:13px;color:var(--muted);line-height:1.85;margin-bottom:24px}
+    .project-tags{display:flex;flex-wrap:wrap;gap:8px}
+    .ptag{font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--border);color:var(--accent);background:var(--warm)}
+    .project-accent{background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;flex-direction:column;justify-content:flex-end;min-height:280px}
+    .project-accent .project-num,.project-accent .project-title{color:white}
+    .project-accent::before{background:rgba(255,255,255,.3)}
+    .accent-quote{font-family:'Playfair Display',serif;font-size:26px;font-style:italic;color:rgba(255,255,255,.85);line-height:1.45;margin-bottom:16px}
+    .accent-sub{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+    .project-link{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);text-decoration:none;margin-top:20px;font-weight:500;transition:gap .3s}
+    .project-link:hover{gap:14px}
+
+    /* SKILLS */
+    #skills{padding:120px 56px;background:white}
+    .skills-layout{display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start}
+    .skills-intro{position:sticky;top:100px}
+    .skills-intro p{color:var(--muted);font-size:14px;line-height:1.9;margin-top:16px}
+    .skills-groups{display:flex;flex-direction:column;gap:48px}
+    .skill-group-title{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);font-weight:500}
+    .skill-item{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;margin-bottom:18px}
+    .skill-name{font-size:13px;color:var(--dark);font-weight:400}
+    .skill-track{grid-column:1/-1;height:2px;background:var(--border);position:relative;overflow:hidden}
+    .skill-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transform-origin:left;animation:barGrow 1.4s cubic-bezier(.4,0,.2,1) both}
+    .skill-pct{font-family:'DM Sans',monospace;font-size:11px;color:var(--muted);grid-row:1;grid-column:2}
+    @keyframes barGrow{from{width:0}to{width:var(--w)}}
+
+    /* CONTACT */
+    #contact{padding:120px 56px;background:var(--dark);position:relative;overflow:hidden}
+    #contact::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(180,150,110,.15),transparent 70%);pointer-events:none}
+    .contact-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;font-weight:500}
+    .contact-big{font-family:'Playfair Display',serif;font-size:clamp(40px,7vw,80px);font-weight:700;letter-spacing:-.03em;line-height:.95;color:white;margin-bottom:40px}
+    .contact-big em{display:block;font-style:italic;color:var(--gold)}
+    .contact-sub{color:rgba(255,255,255,.5);max-width:440px;font-size:14px;line-height:1.9;margin-bottom:52px}
+    .contact-links{display:flex;flex-direction:column;gap:0}
+    .contact-link{display:flex;align-items:center;gap:20px;text-decoration:none;color:rgba(255,255,255,.5);padding:22px 0;border-bottom:1px solid rgba(255,255,255,.08);transition:color .3s}
+    .contact-link:hover{color:var(--gold)}
+    .cl-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);min-width:80px;font-weight:500}
+    .cl-val{flex:1;font-size:14px}
+    .cl-arrow{transition:transform .3s;font-size:18px}
+    .contact-link:hover .cl-arrow{transform:translateX(8px)}
+
+    /* FOOTER */
+    footer{padding:28px 56px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:rgba(255,255,255,.3);background:var(--dark)}
+    footer span:last-child{color:var(--gold);letter-spacing:.08em}
+
+    /* ANIMS */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      nav{padding:18px 24px}
+      #hero{grid-template-columns:1fr;padding:100px 24px 60px}
+      .hero-right{padding-left:0;display:grid;grid-template-columns:1fr 1fr;flex-direction:row}
+      .hero-decor{display:none}
+      #about,#projects,#skills,#contact,footer{padding-left:24px;padding-right:24px}
+      .about-grid{grid-template-columns:1fr;gap:40px}
+      .projects-grid{grid-template-columns:1fr}
+      .skills-layout{grid-template-columns:1fr;gap:40px}
+      .skills-intro{position:static}
+    }
+  </style>
+</head>
+<body>
+  <div class="cur" id="cur"></div>
+  <div class="cur-ring" id="curRing"></div>
+
+  <nav>
+    <a class="nav-logo" href="#hero">Jooeun Lim</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-decor"></div>
+    <div class="hero-left">
+      <div class="hero-tag">Portfolio 2025–2026</div>
+      <h1>Jooeun<br><em>Lim</em></h1>
+      <p class="hero-role">Dancer · Cultural Researcher · Space Explorer</p>
+      <p class="hero-desc">Dance major at Sungkyunkwan University, studying how bodies and cities move together — from performance stages to Seoul's pop-up streets.</p>
+      <div class="hero-cta">
+        <a class="btn btn-fill" href="#projects">View Work</a>
+        <a class="btn btn-out" href="popup-map.html">Pop-up Map</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="hero-card-label">University</div>
+        <div class="hero-card-val">Sungkyunkwan Univ.</div>
+        <div class="hero-card-sub">SKKU — Seoul, Korea</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-label">Major</div>
+        <div class="hero-card-val">Dance</div>
+        <div class="hero-card-sub">4th Year · Senior</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-label">Research Focus</div>
+        <div class="hero-card-val">MZ Pop-up Culture</div>
+        <div class="hero-card-sub">Seongsu · Hannam · Seoul</div>
+      </div>
+    </div>
+    <div class="hero-scroll"><div class="scroll-line"></div><span>Scroll</span></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div>
+        <div class="about-label reveal">01 — About Me</div>
+        <h2 class="about-heading reveal reveal-d1">A dancer<br>who reads<br>the city.</h2>
+        <div class="about-photo-box reveal reveal-d2"></div>
+      </div>
+      <div>
+        <p class="about-text reveal">
+          Hello! I'm <em>Jooeun Lim</em>, a 4th-year Dance major at Sungkyunkwan University. I chose my research theme from a deep personal love for pop-up events — those fleeting, immersive experiences that transform a neighborhood into something alive and electric.<br><br>
+          I'm especially drawn to <em>Seongsu-dong</em> and <em>Hannam-dong</em>, two of Seoul's most vibrant cultural districts. I visit pop-ups regularly, observing how MZ generation consumers move through space, form emotional connections with brands, and claim culture as their own.
+        </p>
+        <div class="about-details reveal reveal-d1">
+          <div class="detail-item">
+            <span class="detail-label">University</span>
+            <span class="detail-val"><strong>Sungkyunkwan University</strong> (SKKU)</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Major</span>
+            <span class="detail-val">Dance — 4th Year</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Research</span>
+            <span class="detail-val">Pop-up Culture · MZ Generation · Urban Space</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Favourite Spots</span>
+            <span class="detail-val"><strong>Seongsu-dong</strong> · <strong>Hannam-dong</strong></span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Interests</span>
+            <span class="detail-val">Choreography · Spatial Curation · Brand Storytelling</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header reveal">
+      <div class="section-label">02 — Projects</div>
+      <h2 class="section-title">Selected Work</h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-num">01</div>
+        <div class="project-title">MZ Generation Pop-up Store &amp; Cultural Space Consumption Trend Map</div>
+        <p class="project-desc">A research and visualization project mapping how MZ generation consumers engage with pop-up stores and cultural spaces across Seoul. Examines spatial behavior, brand affinity, and the experiential economy through field research visits to Seongsu-dong, Hannam-dong, Hongdae, and Gangnam.</p>
+        <div class="project-tags">
+          <span class="ptag">Cultural Research</span>
+          <span class="ptag">Data Mapping</span>
+          <span class="ptag">MZ Generation</span>
+          <span class="ptag">Pop-up Culture</span>
+          <span class="ptag">Seoul</span>
+        </div>
+        <a class="project-link" href="popup-map.html">View Trend Map →</a>
+      </div>
+      <div class="project-card project-accent reveal reveal-d1">
+        <div class="project-num" style="color:rgba(255,255,255,.15)">02</div>
+        <div class="accent-quote">"The city is a choreography.<br>Every pop-up, a new movement."</div>
+        <div class="accent-sub">— Field Research Insight, 2024</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="skills-layout">
+      <div class="skills-intro reveal">
+        <div class="section-label">03 — Skills</div>
+        <h2 class="section-title">Areas of<br>Expertise</h2>
+        <p>Combining movement training, cultural analysis, and spatial research to understand how people experience space and brand narratives.</p>
+      </div>
+      <div class="skills-groups reveal reveal-d1">
+        <div>
+          <div class="skill-group-title">Performance</div>
+          <div class="skill-item">
+            <span class="skill-name">Contemporary Dance</span>
+            <span class="skill-pct">92%</span>
+            <div class="skill-track"><div class="skill-fill" style="--w:92%;width:92%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Choreography</span>
+            <span class="skill-pct">85%</span>
+            <div class="skill-track"><div class="skill-fill" style="--w:85%;width:85%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Stage Direction</span>
+            <span class="skill-pct">78%</span>
+            <div class="skill-track"><div class="skill-fill" style="--w:78%;width:78%"></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-title">Research</div>
+          <div class="skill-item">
+            <span class="skill-name">Field Research</span>
+            <span class="skill-pct">90%</span>
+            <div class="skill-track"><div class="skill-fill" style="--w:90%;width:90%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Cultural Analysis</span>
+            <span class="skill-pct">88%</span>
+            <div class="skill-track"><div class="skill-fill" style="--w:88%;width:88%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Data Visualization</span>
+            <span class="skill-pct">72%</span>
+            <div class="skill-track"><div class="skill-fill" style="--w:72%;width:72%"></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-title">Creative</div>
+          <div class="skill-item">
+            <span class="skill-name">Spatial Curation</span>
+            <span class="skill-pct">84%</span>
+            <div class="skill-track"><div class="skill-fill" style="--w:84%;width:84%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Presentation</span>
+            <span class="skill-pct">88%</span>
+            <div class="skill-track"><div class="skill-fill" style="--w:88%;width:88%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Visual Storytelling</span>
+            <span class="skill-pct">80%</span>
+            <div class="skill-track"><div class="skill-fill" style="--w:80%;width:80%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-label reveal">04 — Contact</div>
+    <div class="contact-big reveal">Let's<br><em>connect.</em></div>
+    <p class="contact-sub reveal">Whether it's a collaboration, a research partnership, or just a coffee chat about Seoul's pop-up scene — I'd love to hear from you.</p>
+    <div class="contact-links reveal">
+      <a class="contact-link" href="mailto:jooeun@skku.edu">
+        <span class="cl-label">Email</span><span class="cl-val">jooeun@skku.edu</span><span class="cl-arrow">→</span>
+      </a>
+      <a class="contact-link" href="https://instagram.com/" target="_blank">
+        <span class="cl-label">Instagram</span><span class="cl-val">@jooeun_lim</span><span class="cl-arrow">→</span>
+      </a>
+      <a class="contact-link" href="https://github.com/" target="_blank">
+        <span class="cl-label">GitHub</span><span class="cl-val">github.com/jooeunlim</span><span class="cl-arrow">→</span>
+      </a>
+    </div>
+  </section>
+  <footer>
+    <span>© 2026 Jooeun Lim. All rights reserved.</span>
+    <span>SKKU Dance · Seoul ✦</span>
+  </footer>
+
+  <script>
+    // Cursor
+    const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+    let mx=window.innerWidth/2,my=window.innerHeight/2,rx=mx,ry=my;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+    (function tick(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(tick)})();
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';ring.style.opacity='0'});
+      el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';ring.style.opacity='.5'});
+    });
+    // Reveal
+    const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  </script>
+</body>
+</html>
